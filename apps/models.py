@@ -13,7 +13,7 @@ def app():
         st.subheader('Book Release:')
         pup = pd.DataFrame(df['1st Pub'].value_counts()).head(50)
         st.bar_chart(pup)
-        st.markdown(''' The release in 2003 is the highst.  ''')
+        st.markdown(''' The most books got published in 2003.  ''')
 
         st.subheader('Authors and how many Books they wrote:')
         author = pd.DataFrame(df['Author'].value_counts()).head(50)

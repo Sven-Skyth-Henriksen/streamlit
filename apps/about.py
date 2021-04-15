@@ -1,6 +1,4 @@
 import streamlit as st
-import streamlit as st
-import time
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -31,12 +29,14 @@ def app():
 
     
         if st.button('Click here'):
+            
             st.markdown("![Hello There](https://media2.giphy.com/media/3ornk57KwDXf81rjWM/200w.webp?cid=ecf05e47chobelyn3nvbi5od5v1l7ahhd8t9uy1irct4rqiq&rid=200w.webp&ct=g)")
             st.write('***The Developer Team***:')
+            st.write('• Paramveer Singh: [GitHub ](https://github.com/paramveer)&[ LinkedIn](https://www.linkedin.com/in/paramveer-singh07/)')
             st.write('• Sven Skyth Henriksen: [GitHub ](https://github.com/Sven-Skyth-Henriksen)&[ LinkedIn](https://www.linkedin.com/in/sven-skyth-henriksen-4857bb1a2/)')
             st.write('• Madina Zhenisbek: [GitHub ](https://github.com/madinach)&[ LinkedIn](https://www.linkedin.com/in/madina-zhenisbek/)')
             st.write('• Olatunde Salami: [GitHub ](https://github.com/salamituns)&[ LinkedIn](https://www.linkedin.com/in/olatunde-salami/)')
-            st.write('• Paramveer Singh: [GitHub ](https://github.com/paramveer)&[ LinkedIn](https://www.linkedin.com/in/paramveer-singh07/)')
+            
 
         
     with image:
