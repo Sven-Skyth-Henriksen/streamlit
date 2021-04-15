@@ -11,12 +11,12 @@ def app():
     
     with media:
         st.subheader('Book Release:')
-        pup = pd.DataFrame(df['1st Pub'].value_counts()).head(50)
+        pup = pd.DataFrame(df['original_publish_year'].value_counts()).head(50)
         st.bar_chart(pup)
         st.markdown(''' The most books got published in 2003.  ''')
 
         st.subheader('Authors and how many Books they wrote:')
-        author = pd.DataFrame(df['Author'].value_counts()).head(50)
+        author = pd.DataFrame(df['author'].value_counts()).head(50)
         st.area_chart(author)
         st.markdown('''Here we can see clearly that **Stephen King** and **William Shakespeare**
         published the most books
