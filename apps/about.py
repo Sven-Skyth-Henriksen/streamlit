@@ -40,6 +40,5 @@ def app():
         
     with image:
         image = Image.open('book.jpeg')
-        st.image(image , witdh = 10)
+        st.image(image , caption='Quote by ERNEST HEMINGWAY')
         
-        #caption='Quote by ERNEST HEMINGWAY'
