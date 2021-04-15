@@ -41,10 +41,4 @@ def app():
     with image:
         image = Image.open('book2.jpeg')
         st.image(image , caption='Quote by ERNEST HEMINGWAY')
-    #col1, col2, col3 = st.beta_columns([1,1,1])
-   # with col1:
-        #st.image("book2.jpeg")
-    #with col2:
-       #st.write("")
-    #with col3:
-        #st.write("")
+    

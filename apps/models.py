@@ -11,8 +11,9 @@ def app():
     
     with media:
         st.subheader('Book Release:')
-        pup = pd.DataFrame(df['original_publish_year'].value_counts()).head(50)
-        st.bar_chart(pup)
+        pub = pd.DataFrame(df['original_publish_year'].value_counts()).head(50)
+        pub = pub[1::]
+        st.bar_chart(pub)
         st.markdown(''' The most books got published in 2003.  ''')
 
         st.subheader('Authors and how many Books they wrote:')
