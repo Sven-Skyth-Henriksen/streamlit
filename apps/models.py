@@ -7,7 +7,7 @@ def app():
     media = st.beta_container()
     image = st.beta_container()
     
-    df = pd.read_csv('Books_total.csv')
+    df = pd.read_csv('Books_universe.csv')
     
     with media:
         st.subheader('Book Release:')
