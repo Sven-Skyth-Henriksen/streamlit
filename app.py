@@ -14,7 +14,7 @@ st.markdown("![Alt Text](https://media4.giphy.com/media/lKYMj63WqlBcc/giphy.gif?
 
 
 st.markdown('''
-## 🔥 Best book you really have to read once 🔥
+## 🔥 Best books you really have to read once 🔥
 
 Please select a page:
 
