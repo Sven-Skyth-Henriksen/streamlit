@@ -4,7 +4,7 @@ from PIL import Image
 import plotly.express as px 
 
 @st.cache
-def load_data():
+def app():
     data = st.beta_container()
     with data:
         st.title('Data')
@@ -21,7 +21,7 @@ def load_data():
     return df
 
       
-df = load_data()
+df = app()
 
 #Sidebar - Author selection
 authors = df.groupby(['author'])#['min_max'].mean()
