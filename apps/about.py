@@ -19,7 +19,7 @@ def app():
         st.markdown('''
     
     Books are disponible for everyone, rich and poor, young and old. 
-    From love stroies to Sci Fi, it's gonna change the world for 
+    From love stroys to Sci Fi, it's gonna change the world for 
     everyone. How will your life be affected ?📖
     
    ⬇️⬇️ This Project was created by 4 ***[Strive School](https://strive.school/)*** Students.⬇️⬇️
