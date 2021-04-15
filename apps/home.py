@@ -7,6 +7,6 @@ def app():
     image = st.beta_container()
     
     with image:
-        image = Image.open('data_science.jpeg')
+        image = Image.open('data2.jpeg')
         st.image(image, caption='')
         
