@@ -23,8 +23,8 @@ def app():
         published the most books
         ''')
     
-        st.subheader('Rating Count:')
-        rating_count = pd.DataFrame(df['Rating Count'].value_counts()).head(50)
+        st.subheader('Reviews:')
+        rating_count = pd.DataFrame(df['num_reviews'].value_counts()).head(50)
         st.area_chart(rating_count)
     
     with image:
