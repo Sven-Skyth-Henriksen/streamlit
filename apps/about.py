@@ -38,10 +38,10 @@ def app():
             st.write('• Olatunde Salami: [GitHub ](https://github.com/salamituns)&[ LinkedIn](https://www.linkedin.com/in/olatunde-salami/)')
             
         
-    with image:
+    #with image:
         #image = Image.open('book.jpeg')
         #st.image(image , caption='Quote by ERNEST HEMINGWAY')
-        col1, col2, col3 = st.beta_columns([2,1,1])
+    col1, col2, col3 = st.beta_columns([2,1,1])
     with col1:
         st.image("book.jpeg")
     with col2:
