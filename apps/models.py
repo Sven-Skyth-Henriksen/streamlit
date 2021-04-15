@@ -26,7 +26,7 @@ def app():
         st.subheader('Series:')
         rating_count = pd.DataFrame(df['series'].value_counts()).head(50)
         st.bar_chart(rating_count)
-        st.markdown('Here we can see that there are much more single releaseed books then series. ')
+        st.markdown('Here we can see that there are much more **single releaseed** books then series. ')
     
     with image:
         st.subheader('Avg-Ratings / Pages')
