@@ -25,7 +25,7 @@ def app():
     
         st.subheader('Reviews:')
         rating_count = pd.DataFrame(df['num_reviews'].value_counts()).head(50)
-        st.bar chart(rating_count)
+        st.bar_chart(rating_count)
     
     with image:
         st.subheader('Avg-Ratings / Pages')
