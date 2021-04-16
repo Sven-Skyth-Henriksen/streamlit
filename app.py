@@ -27,7 +27,7 @@ app.add_app('Home',home.app)
 app.add_app("About", about.app)
 app.add_app("Data", data.app)
 
-app.add_app('Graphs', graph.app)
+app.add_app('Data Analysis', graph.app)
 
 
 
