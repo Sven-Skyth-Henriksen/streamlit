@@ -1,0 +1,351 @@
+from gevent import monkey as curious_george
+curious_george.patch_all(thread=False, select=False)
+import sys
+import requests
+import grequests
+import pandas as pd
+import numpy as np
+import re
+from bs4 import BeautifulSoup
+import time
+import matplotlib.pyplot as plt
+import sweetviz as sv
+from matplotlib import cm
+import seaborn as sns
+import scipy.stats as st
+import statsmodels as sm
+from scipy.stats import pearsonr
+import chart_studio.plotly as py
+import plotly.graph_objects as go
+
+import plotly.express as px
+
+def scraper(base_url):
+    base_url = "https://www.goodreads.com/list/show/264.Books_That_Everyone_Should_Read_At_Least_Once?page={}"
+
+
+def get_pages_links(string, index):
+    links = []
+    for index in range(1,index):
+        url = string.format(index)
+        links.append(url)
+    return links
+    
+def grequest_page(strings, index):
+    reqs = (grequests.get(string) for string in strings)
+    resp = grequests.imap(reqs, grequests.Pool(index))
+    return resp
+def request_single_page(string):
+    res = requests.get(string)
+    return res
+
+def request_soup(page):
+    soup = BeautifulSoup(page.content ,"html.parser")
+    return soup
+
+def close_request(request_page):
+    request_page.close()
+    return
+
+def read_books_links(page_soup):
+    Links = []
+    #table = page_soup.find_all('table', class_ = 'tableList js-dataTooltip')
+    #print(table)
+    books = page_soup.find_all('tr')
+    for book in books:
+        info_book = book.find('a', class_ = 'bookTitle')
+        book_link = "https://www.goodreads.com{}".format(info_book['href'])
+        Links.append(book_link)    
+    return Links
+def get_bookslink(index):
+    Links_res = []
+    page = grequest_page(get_pages_links(base_url, index), index)
+    for r in page: 
+        soup = request_soup(r)
+        Links_res = Links_res + read_books_links(soup)
+    print(len(Links_res))
+    with open("Links_for_each_book.txt", "w") as output:
+        output.write(str(Links_res))
+    return Links_res
+
+def get_pubDate(data):  
+    if data.find('nobr', class_ = "greyText") is not None:
+        firstPub = data.find('nobr', class_ = "greyText").text
+        firstPub = firstPub.strip()
+        firstPub = firstPub[-5:]
+        firstPub = firstPub.replace(")","")
+        return firstPub
+    else: return np.nan
+
+def get_genres(book):
+    genres = []
+    names = book.find_all('a', class_="actionLinkLite bookPageGenreLink")
+    if names is not None:
+        for name in names:
+          genres.append(name.get_text())  
+        return genres
+    else:
+        return np.nan
+
+def get_awards(book):
+    awards_list = []    
+    names = book.find_all('a', class_="award")
+    if names is not None:
+        for name in names:
+            awards_list.append(name.get_text())
+        return awards_list
+    else: 
+        return np.nan
+    
+def get_places(book):
+    return
+
+def get_info_book(page_soup, link, index):
+    book = page_soup.find_all('div', class_ = 'mainContentFloat')
+    for data in book:
+        #TITLE of the Book
+        title = data.find('h1')
+        if title is not None:
+            title = title.text
+            title = title.strip()
+        else: title = np.nan
+        #AUTHOR of the book
+        author = data.find('a', class_ = "authorName")
+        if author is not None:
+            author = author.text
+        else: author = np.nan
+        #RATING COUNT of the book
+        ratingCount = data.find('meta', itemprop = "ratingCount")
+        if ratingCount is not None:
+            ratingCount = ratingCount.text
+            ratingCount = re.sub("\D", "", ratingCount)
+        else: ratingCount = np.nan
+        #REVIEW COUNT of the book
+        reviewCount = data.find('meta', itemprop = "reviewCount")
+        if reviewCount is not None:
+            reviewCount = reviewCount.text
+            reviewCount = re.sub("\D", "", reviewCount)
+        else: reviewCount = np.nan
+        #RATING VALUE of the book
+        ratingValue = data.find('span', itemprop = "ratingValue")
+        if ratingValue is not None:
+            ratingValue = ratingValue.text
+            ratingValue = ratingValue.strip()
+        else: ratingValue = np.nan
+        #NUMBER OF PAGES of the book
+        numberOfPages = data.find('span', itemprop = "numberOfPages")
+        if numberOfPages is not None:
+            numberOfPages = numberOfPages.text
+            numberOfPages = re.sub("\D", "", numberOfPages)
+        else: numberOfPages = np.nan
+        #YEAR OF FIRST PUBBLICATION of the book
+        firstPub = get_pubDate(data)
+        #CHECK IF IT IS A SERIES OR NOT
+        series = data.find('div', id = "bookDataBox").text
+        if "Series" in series: 
+            series = '1'
+        else: 
+            series = '0'
+        #GENRES of the book
+        genreList = get_genres(data)
+        #AWARDS of the book
+        awards = get_awards(data)
+        #PLACES of the book
+ 
+        
+        #Return Dictionary
+        Book_dict = {
+                "Link":link,
+                "Title":title,
+                "Author":author,
+                "Rating Count":ratingCount,
+                "Review Count":reviewCount,
+                "Rating Value":ratingValue,
+                "N pag":numberOfPages,
+                "1st Pub":firstPub,
+                "series":series,
+                "Genres":genreList,
+                "Awards":awards}
+        #print(index,"  ",link,"\n__",title,author,ratingCount, reviewCount, ratingValue, numberOfPages,firstPub,           series, genreList, awards,"\n\n")
+        return Book_dict
+
+
+
+def create_csv(index):
+    links = get_bookslink(index + 1)
+    res_dict = {}
+    i = 1
+    page = grequest_page(links, index + 1)
+    df = pd.DataFrame()
+    for r, link in zip(page, links): 
+        soup = request_soup(r)
+        value = get_info_book(soup, link, i)
+        if value is not None:
+            df = df.append(value, ignore_index=True)
+        i = i + 1
+        print(df.tail())
+    df.to_csv('./Books_total.csv')
+    return
+    def preprocessing (csv):
+    
+    data = pd.read_csv(csv)
+    
+    cols = ['Unnamed: 0','Link','Title','Author','Review Count','Rating Count','Rating Value','1st Pub','series','Genres','Awards','N pag']
+
+    df = data[cols]
+    df.rename(columns={'Unnamed: 0':"unnamed_0",'Link':"url",'Title':"title",'Author':"author",
+    'Review Count':"num_reviews",'Rating Count':"num_ratings",
+    'Rating Value':"avg_ratings",'1st Pub':"original_publish_year",'series':"series",
+    'Genres':"genres",'Awards':"awards",'N pag':"num_pages"},inplace=True)
+    df.drop(['unnamed_0'],axis=1)
+
+    #number of awards
+    awards_number = [len(awards.split(',')) for awards in df['awards'] ]
+    df["award_number"]= awards_number
+
+    #normalizations
+    maxr=df['avg_ratings'].max()
+    minr =df['avg_ratings'].min()
+    meanr= df['avg_ratings'].mean()
+    #mean_normalization
+    df['mean_norm_ratings'] = round(((df['avg_ratings']- meanr) / (maxr- minr)),2)
+
+    #min-max normalization
+    df['min_max'] = round((1 + ((df.avg_ratings-minr)/(maxr-minr))*9),2)
+    
+    #cleaning
+    df=df.fillna(0)
+    df.num_pages = df.num_pages.astype(float).astype(int)
+    df.original_publish_year = df.original_publish_year.astype(float).astype(int)
+    df.series = df.series.astype(bool)
+
+    df =df.drop('unnamed_0',axis=1)
+    
+    #for streamlit
+    df.to_csv('Books_universe.csv')
+
+
+    return df
+
+def anaylse(df):
+
+    def eda():
+        df.describe()
+        df.info()
+    eda()
+
+
+    # Statistics:
+    def correlation():
+        corr = df.corr()
+
+        mask = np.triu(np.ones_like(corr, dtype=bool))
+        cmap = sns.diverging_palette(230, 20, as_cmap=True)
+        sns.heatmap(corr, mask=mask, cmap=cmap, vmax=.3, center=0,
+                    square=True, linewidths=.5, cbar_kws={"shrink": .5})
+    correlation()
+
+    #Displot
+    def displots():
+
+        sns.displot(df['min_max'], bins= 20, edgecolor= "white", kde= True, alpha= 0.5)
+
+        sns.displot(df['mean_norm_ratings'], bins= 20, edgecolor= "white",kde= True, alpha= 0.65, color= '#008367')
+         plt.xlabel("mean_norm_rating distribution")
+    displots()
+
+    def distributions():
+        #4min max rating distribution
+        plt.rcParams.update({'figure.figsize':(7,5)})
+        #plt.hist(df.min_max, bins= 20) #we could change the bins
+        sns.displot(df['min_max'], bins= 20, edgecolor= "white", kde= True, alpha= 0.75)
+
+        plt.rcParams.update({'figure.figsize':(7,5)})
+        plt.hist(df['min_max'], alpha=0.5, label='Min-Max', edgecolor= "w")
+        plt.hist(df['mean_norm_ratings'], alpha=0.5, label='Mean_Norm', edgecolor= "w")
+        plt.legend(loc='upper right')
+        plt.show()
+
+    
+    def outlier():
+        fig = px.box(df['award_number'],title="Visualizing the Outliers for No. of Awards ")
+        fig.show()
+    outlier()
+
+    def graphs():
+    # Checking data
+    
+    #anlysis by author 
+    #Average Ratings vs Number of Ratings
+
+        dx=df.sort_values(by=('min_max'), ascending= False)[0:200]
+        dx
+        fig = px.scatter(dx, x=dx["min_max"].values, y=dx["num_ratings"], hover_name=dx["title"],size=dx['num_pages']*10000, 
+        hover_data=['num_pages','author'],labels={
+                            "x":"Average Ratings",
+                            "y":"Number of Ratings",
+                            
+                        },color=dx["author"])
+
+        #fig.update_traces(marker=dict(size=df['num_pages']/15))
+        fig.update_xaxes(showgrid=False)
+        fig.update_yaxes(showgrid=False )
+        fig.update(layout_showlegend=False)
+        fig.update_layout(plot_bgcolor="black", height= 600,width=1000,title_text='Number of Ratings in comparison to the Number of Ratings')
+        fig.show()
+
+        #Another one
+        authors = df.groupby(['author'])['award_number'].count()
+        authors =pd.DataFrame(authors)
+        authors = authors.sort_values(by=['award_number'],ascending=False)[0:50]
+        fig = px.bar(authors, x=authors.index.values, y=authors.award_number,color_continuous_scale='agsunset',
+        labels={
+                            "x":"Authors",
+                            "y":"Award Count"
+                            
+                        }
+                        )
+
+        fig.update_traces(marker=dict(size=12,
+                                    line=dict(width=1
+                                                )),
+                        selector=dict(mode='markers'))
+        fig.update_xaxes(showgrid=False)
+        fig.update_yaxes(showgrid=False )
+        fig.update(layout_showlegend=False)
+
+        fig.update_layout(plot_bgcolor="black",
+        height=800,width=800,
+        title_text='Number of Awards Won by an Individual Author(Top 50 Authors)'
+        )
+
+        fig.show()
+
+        #Another one
+        authors_ratings = df.groupby(['author'])['min_max'].mean()
+        authors_ratings =pd.DataFrame(authors_ratings).sort_values(by=['min_max'],ascending=False)[0:50]
+        fig = px.scatter(authors_ratings, x=authors_ratings.index.values, y=authors_ratings.min_max,
+        labels={
+                            "x":"Authors",
+                            "y":"Average Rating",
+                            
+                        },color=authors_ratings.index
+                        )
+
+        fig.update_traces(marker=dict(size=12,
+                                    line=dict(width=1,
+                                                )),
+                        selector=dict(mode='markers'))
+        fig.update_xaxes(showgrid=False)
+        fig.update_yaxes(showgrid=False )
+        fig.update(layout_showlegend=False)
+        fig.update_layout(plot_bgcolor="black",
+        height=800,
+        title_text='Average Rating per Author in the DataFrame'
+        )
+
+        fig.show()
+
+if __name__ == "__main__":    
+    create_csv(1)
+    print("--- %s seconds ---" % (time.time() - start_time))
