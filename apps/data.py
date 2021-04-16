@@ -16,8 +16,8 @@ def app():
         st.title('Data')
         st.markdown("![Data](https://media4.giphy.com/media/xT9C25UNTwfZuk85WP/200.webp?cid=ecf05e47844brv5239cczg9hqo5ernebyirvx4xaua7k2dk8&rid=200.webp&ct=g)")
 
-        if st.checkbox('All the Data'):
-            st.subheader('Raw Data')
+        if st.checkbox('Reveal The Library'):
+            st.subheader('Books')
             st.write(df) #.header(50) inside the the ()
     
                     
