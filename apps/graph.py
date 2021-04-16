@@ -30,9 +30,7 @@ def app():
         with st.beta_expander('• Books featured by a single Author'):
             st.subheader('Number of Books by a single Author:')
             st.markdown(''' **Stephen King** and **William Shakespeare** clearly were not experiencing 
-            any writers block.On the figure, we can see the number of awards won by an Individual Author for books in our list.
-            For people who are interested to read the most award-winning books,
-            we recommend checking out Stephen King's and William Shakespeare's books.''')
+            any writers block.''')
 
             author_books = df.groupby('author').count()
             author_books = pd.DataFrame(author_books).sort_values(
@@ -62,7 +60,11 @@ def app():
 
         # Another1
         with st.beta_expander('• Curious about the most Decorated Authors? Click me!'):
-            st.subheader('Number of Awards :')
+            st.subheader('Number of Awards 
+            st.markdown(''' **Stephen King** and **William Shakespeare** clearly were not experiencing 
+            any writers block.On the figure, we can see the number of awards won by an Individual Author for books in our list.
+            For people who are interested to read the most award-winning books,
+            we recommend checking out Stephen King's and William Shakespeare's books.''')
             
             authors = df.groupby(['author'])['award_number'].count()
             authors = pd.DataFrame(authors)
