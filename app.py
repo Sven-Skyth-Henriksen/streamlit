@@ -1,7 +1,7 @@
 
 import streamlit as st
 from multiapp import MultiApp
-from apps import about, data, models, home  # import your app modules here
+from apps import about, data, models, home, graph  # import your app modules here
 
 app = MultiApp()
 
@@ -25,7 +25,7 @@ app.add_app('Home',home.app)
 app.add_app("About", about.app)
 app.add_app("Data", data.app)
 app.add_app('Models', models.app)
-
+app.add_app('Graphs', graph.app)
 
 
 
