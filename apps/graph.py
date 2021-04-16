@@ -14,7 +14,6 @@ def app():
         #Another 1
         st.subheader('Book Release:')
         pup = pd.DataFrame(df['original_publish_year'].value_counts()).head(50)
-        pub = pub[1::]
         st.bar_chart(pup)
         st.markdown(''' The number of books published was at its highest in 2003.  ''')
 
