@@ -26,7 +26,6 @@ st.markdown('Please select a page:')
 app.add_app('Home',home.app)
 app.add_app("About", about.app)
 app.add_app("Data", data.app)
-
 app.add_app('Data Analysis', graph.app)
 app.add_app('Recommendation', tinker.app)
 
