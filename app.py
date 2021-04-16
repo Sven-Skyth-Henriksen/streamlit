@@ -12,7 +12,7 @@ st.markdown("![Alt Text](https://media4.giphy.com/media/lKYMj63WqlBcc/giphy.gif?
 
 st.title(' Ravenclaw Team welcomes you to our website')
 st.text(' ')
-st.text('--------------------------------------------- ')
+st.markdown('----------------------------------------------- ')
 st.text(' ')
 st.text(' ')
 
