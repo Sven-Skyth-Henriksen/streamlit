@@ -29,8 +29,7 @@ def app():
 
         with st.beta_expander('• Books featured by a single Author'):
             st.subheader('Number of Books by a single Author:')
-            st.markdown(''' **Stephen King** and **William Shakespeare** clearly were not experiencing 
-            any writers block.''')
+            st.markdown(''' **Stephen King** and **William Shakespeare** clearly were not experiencing any writers block.''')
 
             author_books = df.groupby('author').count()
             author_books = pd.DataFrame(author_books).sort_values(
