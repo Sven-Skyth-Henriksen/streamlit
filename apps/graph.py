@@ -14,7 +14,7 @@ def app():
     with media:
         # Another 1
         with st.beta_expander('• In what year was most of the outstanding books released?'):
-            st.text('Books released')
+            #st.text('Books released')
             st.subheader('Book Release:')
             st.markdown(''' The bar graphs shows the number of books published in a given year starting from 1929 until 2014. 
             The highest number of books was released in 2003. Possibly, it was due to the availability of audiobooks and ebooks on the market. 
@@ -27,8 +27,8 @@ def app():
 
         # Another1
 
-        with st.beta_expander('• Which authors have the highest outstanding books'):
-            st.subheader('Authors and how many Books they wrote:')
+        with st.beta_expander('• Books featured by a single Author'):
+            st.subheader('Number of Books by a single Author:')
             st.markdown(''' **Stephen King** and **William Shakespeare** clearly were not experiencing 
             any writers block.On the figure, we can see the number of awards won by an Individual Author for books in our list.
             For people who are interested to read the most award-winning books,
@@ -62,7 +62,7 @@ def app():
 
         # Another1
         with st.beta_expander('• Curious about the most Decorated Authors? Click me!'):
-            st.subheader('Number of Awards:')
+            st.subheader('Number of Awards :')
             
             authors = df.groupby(['author'])['award_number'].count()
             authors = pd.DataFrame(authors)
