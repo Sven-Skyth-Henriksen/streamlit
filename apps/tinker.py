@@ -17,11 +17,11 @@ def app():
     - Potential Avenues
     - Flexibility and Adaptability.''')
 
-    image = st.beta_container()
-    with image:
-        st.subheader('Books Published over the Years')
-        image = Image.open('new-books-per-million.png')
-        st.image(image, caption='Evidence')
+    #image = st.beta_container()
+    #with image:
+        #st.subheader('Books Published over the Years')
+        #image = Image.open('meme.jpeg')
+        #st.image(image, caption='Evidence')
 
     
 
