@@ -18,7 +18,7 @@ def app():
         st.title('⚜️ About ⚜️:')
         st.markdown('''
     
-    Books are disponible for everyone, rich and poor, young and old. 
+    Books are available for everyone, rich and poor, young and old. 
     From love stroys to Sci Fi, it's gonna change the world for 
     everyone. How will your life be affected ?📖
     
