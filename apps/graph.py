@@ -59,7 +59,7 @@ def app():
 
         # Another1
         with st.beta_expander('• Curious about the most Decorated Authors? Click me!'):
-            st.subheader('Number of Awards 
+            st.subheader('Number of Awards') 
             st.markdown(''' **Stephen King** and **William Shakespeare** clearly were not experiencing 
             any writers block.On the figure, we can see the number of awards won by an Individual Author for books in our list.
             For people who are interested to read the most award-winning books,
