@@ -20,7 +20,7 @@ def app():
             The highest number of books was released in 2003. Possibly, it was due to the availability of audiobooks and ebooks on the market. 
             Moreover, it is clear that the number of books released increases mainly throughout the given period of time.  ''')
             pup = pd.DataFrame(
-                df['original_publish_year'][1::].value_counts()).head(50)
+                df['original_publish_year'][2::].value_counts()).head(50)
             st.bar_chart(pup)
             
 
