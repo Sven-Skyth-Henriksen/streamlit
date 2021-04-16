@@ -17,7 +17,7 @@ st.text(' ')
 st.text(' ')
 
 st.markdown(' ')
-st.markdown('## 🔥 Best books you really have to read once 🔥 ')
+st.markdown('## 🔥 Books you really have to read once 🔥 ')
 st.markdown('----------------------------------------------- ')
 st.markdown(' ')
 st.markdown('Please select a page:')
